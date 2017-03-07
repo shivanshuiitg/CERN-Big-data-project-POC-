@@ -5,4 +5,4 @@ This project is solution of exercise Big Data Tools For Physics Analysis for CER
 
 2) Go to directory, where you cloned this repositry.
 
-3) IPYTHON_OPTS="notebook" pyspark
+3) Execute command from terminal, IPYTHON_OPTS="notebook" pyspark
