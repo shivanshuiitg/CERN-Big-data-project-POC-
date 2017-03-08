@@ -11,18 +11,16 @@ var iteration = 1
     function render_html(number_of_jobs){
         $('#main-div').css("height",(number_of_jobs*150 + 120).toString()+"px");
         var count = 0;
+        var str = " ";
         for (count = 0;count <number_of_jobs;count++){
-            var str = '<div class="job-div" id="job-'+count+'"><div class="job-details"><strong style="color:green">Job ID:</strong> <strong><span class="job-id">1<span></strong><br><strong style="color:green">Job Name:</strong> <strong><span class="job-name"><span></strong><br><strong style="color:green">Job Status: </strong><strong><span class="job-status"><span><strong></div><table border="3" class="job-table"><tbody><tr style="height: 23px;"><td style="width: 150px; height: 23px;"><strong>Number of Tasks</strong></td><td style="width: 150px; height: 23px; color: orange;"><strong>Active Tasks</strong></td><td style="width: 150px; height: 23px; color: green;"><strong>Completed Tasks</strong></td><td style="width: 150px; height: 23px; color: blue;"><strong>Skipped Tasks</strong></td><td style="width: 150px; height: 23px; color: red;"><strong>Failed Tasks</strong></td></tr><tr style="height: 23px;"><td style="width: 150px; height: 23px;"><span class="number-of-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="active-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="completed-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="skipped-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="failed-tasks"><span></td></tr></tbody></table><span class="job-progress-span"><div class="progress-slider"><div class="progress-slider-bar" id="progress_slider_bar_"'+count+' ></div><div class="progress-slider-number"></div></div></span></div><br>';
-            $("#main-div").append(str);
+         str =  str + '<div class="job-div" id="job-'+count+'"><div class="job-details"><strong style="color:green">Job ID:</strong> <strong><span class="job-id">1<span></strong><br><strong style="color:green">Job Name:</strong> <strong><span class="job-name"><span></strong><br><strong style="color:green">Job Status: </strong><strong><span class="job-status"><span><strong></div><table border="3" class="job-table"><tbody><tr style="height: 23px;"><td style="width: 150px; height: 23px;"><strong>Number of Tasks</strong></td><td style="width: 150px; height: 23px; color: orange;"><strong>Active Tasks</strong></td><td style="width: 150px; height: 23px; color: green;"><strong>Completed Tasks</strong></td><td style="width: 150px; height: 23px; color: blue;"><strong>Skipped Tasks</strong></td><td style="width: 150px; height: 23px; color: red;"><strong>Failed Tasks</strong></td></tr><tr style="height: 23px;"><td style="width: 150px; height: 23px;"><span class="number-of-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="active-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="completed-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="skipped-tasks"><span></td><td style="width: 150px; height: 23px;"><span class="failed-tasks"><span></td></tr></tbody></table><span class="job-progress-span"><div class="progress-slider"><div class="progress-slider-bar" id="progress_slider_bar_"'+count+' ></div><div class="progress-slider-number"></div></div></span></div><br>';
         }
+        $("#job-info").html(str)
     }
     function render_live_data(jobs_dict){
         //alert("Number of Jobs : " + jobs_dict.length)
         number_of_jobs = jobs_dict.length
-        if (iteration == 1){
-            render_html(number_of_jobs);
-            iteration = 0
-        }
+        render_html(number_of_jobs)
         
         for (var i = 0;i<number_of_jobs;i++){
             var job = jobs_dict[i];
