@@ -12,20 +12,38 @@
     border: 2px solid blue;
     padding: 20 px;
     width: 100%;
-    height: 50px;   
+    height: 40px;   
 }
-#application_name {
+
+#app_name {
+    position: relative;
+    top: 4px;
     padding: 10px;
 }
 
-#application_id{
+#app_id{
+    position: relative;
+    top: 4px;
     padding: 10px;
 }
 
 #number_of_attempts{
+    position: relative;
+    top: 4px;
     padding: 10px;
 }
 
+.job_submission{
+    position: relative;
+    left : 40px;
+    top: 15px;
+}
+
+.job_completion{
+    position: relative;
+    left: 40px;
+    top: 15px;
+}
 .job-div {
     border-radius : 5px;
     border: 2px solid black;
@@ -63,7 +81,6 @@
 .progress-slider-bar{
     width:100%;
     height:30px;
-    border-right: 1px solid #000000;
     background: #1CDFDF
     ;}
 .progress-slider-number {
@@ -74,4 +91,32 @@
     left: 25px;
     position: relative;
     top: -27px; }
+#stop_application_button {
+    position: relative;
+    float: right;
+    right: 8px;
+    top: 3px;
+}
+.loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid blue;
+  border-right: 8px solid green;
+  border-bottom: 8px solid red;
+  border-left: 8px solid pink;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
