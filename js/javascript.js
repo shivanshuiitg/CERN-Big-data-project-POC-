@@ -2,6 +2,7 @@
 // indicator variable for all jobs completion
 var isComplete = 0;
 var iteration = 1;
+var isStopped = 0;
 // template html string for Job
 var job_html_template_string = '<div class="job-details">\
 <strong style="color:green">Job ID:</strong><span class="job-id"></span><br>\
@@ -39,6 +40,8 @@ var job_html_template_string = '<div class="job-details">\
 <span style="color:green;font-weight:bold;">Job Completion : </span>\
 <span class="job_completion_time"></span>\
 </span>';
+
+// function to determine if JSON string is valid or not
 function isJSON(str) {
     try {
         JSON.parse(str);
@@ -48,6 +51,7 @@ function isJSON(str) {
     return true;
 }
 
+// function to render the HTML on Jupyter notebook
 function render_html(number_of_jobs){
     $('#main-div').css("height",(number_of_jobs*180 + 70).toString()+"px");
     var count = 0;
@@ -58,6 +62,7 @@ function render_html(number_of_jobs){
     $("#job-info").html(str)
 }
 
+// function to render the live data on Jupyter notebook
 function render_live_data(jobs_dict){
     number_of_jobs = jobs_dict.length
     render_html(number_of_jobs)
@@ -96,12 +101,15 @@ function render_live_data(jobs_dict){
             $("#stop_application_button").attr("disabled","disabled");
     }
 }
+
+// render Application data on Jupyter notebook
 function render_application_data(application_dict){
     $("#application-name").text(application_dict[0]["name"]);
     $("#application-id").text(application_dict[0]["id"]);
     $("#number-of-attempts").text((application_dict[0]["attempts"]).length);
 }
 
+// get the output from python kernel
 function get_output(out){
     var res = null;
     if(out.msg_type == "stream"){
@@ -121,22 +129,31 @@ function get_output(out){
     }
     return res;
 }
-    
+
 function handle_jobs_data_output(out){
     var result = get_output(out);
-    console.log(result)
     var jobs_json_string = result.substr(1).slice(0, -1);
     var jobs_dict = JSON.parse(jobs_json_string);
-    console.log(jobs_dict)
     render_live_data(jobs_dict);
 }
+
 function handle_application_data_output(out){
     var result = get_output(out)
-    console.log(result)
     var application_json_string = result.substr(1).slice(0, -1);
     var application_dict = JSON.parse(application_json_string);
     render_application_data(application_dict)
 }
+
+function handle_stop_application_output(out){
+    var output  = get_output(out);
+}
+
+function stop_application(){
+    var get_stop_application_python_code = "fc.StopApplication(sc)";
+    var kernel = IPython.notebook.kernel;
+    var msg_id = kernel.execute(get_stop_application_python_code,{ 'iopub' : {'output' : handle_stop_application_output}}, {silent:false});
+}
+
 function exec_code(){
     if (iteration==1){
         var get_application_python_code = "fc.get_all_applications(sc)";
@@ -150,14 +167,19 @@ function exec_code(){
     var msg_id_2 = kernel_2.execute(get_jobs_python_code, callbacks, {silent:false});
 }
 
+$("#stop_application_button").click(function(){
+    isStopped = 1;
+    stop_application();
+    $(".job-status").html("<strong style='color:red'>Application Killed</strong>");
+    $(this).attr("disabled","disabled");
+    $('.progress-slider-bar').css('background','#FF4C4C');
+});
+
 exec_code()
 setInterval(function(){
     // if all jobs are not completed then keep polling
-    if (isComplete==0){
+    if (isComplete==0 && isStopped==0){
         exec_code();
     }
 }, 500);
 </script>
-
-
-
