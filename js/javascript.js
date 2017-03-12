@@ -167,12 +167,15 @@ function exec_code(){
     var msg_id_2 = kernel_2.execute(get_jobs_python_code, callbacks, {silent:false});
 }
 
+function application_stop_indication(){
+    $(".job-status").html("<strong style='color:red'>Application Killed</strong>");
+    $("#stop_application_button").attr("disabled","disabled");
+    $('.progress-slider-bar').css('background','#FF4C4C');
+}
 $("#stop_application_button").click(function(){
     isStopped = 1;
     stop_application();
-    $(".job-status").html("<strong style='color:red'>Application Killed</strong>");
-    $(this).attr("disabled","disabled");
-    $('.progress-slider-bar').css('background','#FF4C4C');
+    setTimeout(application_stop_indication, 800);
 });
 
 exec_code()
